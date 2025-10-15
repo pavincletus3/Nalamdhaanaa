@@ -31,7 +31,7 @@ interface UserLocation {
 }
 
 // Mock API base URL - you can replace this with your actual API
-const API_BASE_URL = "http://localhost:5000";
+const API_BASE_URL = "http://localhost:8000";
 
 // Fix Leaflet default marker icons
 delete (Icon.Default.prototype as any)._getIconUrl;
