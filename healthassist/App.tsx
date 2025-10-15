@@ -11,6 +11,7 @@ import Prescriptions from "./pages/Prescriptions";
 import Chat from "./pages/Chat";
 import Medicines from "./pages/Medicines";
 import Nearby from "./pages/Nearby";
+import Misinformation from "./pages/Misinformation";
 import Alerts from "./pages/Alerts";
 import Settings from "./pages/Settings";
 
@@ -102,6 +103,16 @@ const AppRoutes: React.FC = () => {
           <PrivateRoute>
             <Layout>
               <Nearby />
+            </Layout>
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/misinformation"
+        element={
+          <PrivateRoute>
+            <Layout>
+              <Misinformation />
             </Layout>
           </PrivateRoute>
         }

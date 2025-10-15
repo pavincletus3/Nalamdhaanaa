@@ -83,7 +83,7 @@ const MedicineForm: React.FC<{
         </button>
         <button
           type="submit"
-          className="py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary hover:bg-primary-600"
+          className="py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary-500 hover:bg-primary-600"
         >
           {initialData ? "Update" : "Add"} Medicine
         </button>
@@ -136,7 +136,7 @@ const Medicines: React.FC = () => {
             setEditingMedicine(undefined);
             setShowForm(true);
           }}
-          className="flex items-center bg-primary text-white py-2 px-4 rounded-lg font-semibold hover:bg-primary-600 transition-colors"
+          className="flex items-center bg-primary-500 text-white py-2 px-4 rounded-lg font-semibold hover:bg-primary-600 transition-colors"
         >
           <Plus className="h-5 w-5 mr-2" />
           Add Medicine

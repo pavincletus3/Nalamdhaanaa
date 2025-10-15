@@ -1,148 +1,176 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import { Heart, Mail, Key, ArrowLeft } from "lucide-react";
+import { Heart, Mail, Lock, Eye, EyeOff } from "lucide-react";
 
 const Login: React.FC = () => {
+  const [isSignUp, setIsSignUp] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { login } = useAuth();
+  const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  const { signIn, signUp } = useAuth();
   const navigate = useNavigate();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // In a real app, you would validate credentials
-    if (email && password) {
-      login(email);
-      // Navigate to dashboard after successful login
-      navigate("/");
+    setLoading(true);
+    setError("");
+
+    try {
+      const { error } = isSignUp
+        ? await signUp(email, password)
+        : await signIn(email, password);
+
+      if (error) {
+        setError(error.message);
+      } else {
+        if (isSignUp) {
+          setError("Check your email for the confirmation link!");
+        } else {
+          navigate("/");
+        }
+      }
+    } catch (err) {
+      setError("An unexpected error occurred");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center gradient-bg py-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-r from-primary-600/5 to-emerald-600/5"></div>
-
-      <div className="max-w-md w-full space-y-8 relative">
-        <div className="text-center">
-          <button
-            onClick={() => navigate("/landing")}
-            className="inline-flex items-center text-gray-600 hover:text-gray-900 mb-8 transition-colors group"
-          >
-            <ArrowLeft className="h-4 w-4 mr-2 group-hover:-translate-x-1 transition-transform duration-200" />
-            Back to home
-          </button>
-
-          <div className="flex justify-center mb-6">
-            <div className="p-4 bg-gradient-to-br from-primary-500 to-primary-600 rounded-3xl shadow-xl animate-glow">
-              <Heart className="h-12 w-12 text-white" />
+    <div className="min-h-screen bg-gradient-to-br from-primary-50 to-emerald-50 flex items-center justify-center px-4">
+      <div className="max-w-md w-full">
+        {/* Header */}
+        <div className="text-center mb-8">
+          <div className="flex items-center justify-center space-x-3 mb-4">
+            <div className="p-3 bg-gradient-to-br from-primary-500 to-primary-600 rounded-xl shadow-lg">
+              <Heart className="h-8 w-8 text-white" />
             </div>
+            <span className="text-3xl font-bold text-gray-900">
+              Nalamdhaanaa
+            </span>
           </div>
-
-          <h2 className="text-4xl font-bold text-gray-900 mb-2">
-            Welcome Back
-          </h2>
-          <p className="text-lg text-gray-600">
-            Sign in to{" "}
-            <span className="text-gradient font-semibold">Nalamdhaanaa</span>
-          </p>
-          <p className="text-sm text-gray-500 mt-2">
-            Your personal health companion awaits
+          <h1 className="text-2xl font-bold text-gray-900 mb-2">
+            {isSignUp ? "Create your account" : "Welcome back"}
+          </h1>
+          <p className="text-gray-600">
+            {isSignUp
+              ? "Start your health management journey today"
+              : "Sign in to access your health dashboard"}
           </p>
         </div>
 
-        <div className="card p-8 space-y-6">
+        {/* Form */}
+        <div className="bg-white rounded-2xl shadow-xl p-8">
           <form onSubmit={handleSubmit} className="space-y-6">
-            <div className="space-y-4">
-              <div className="input-with-icon">
-                <Mail className="icon h-5 w-5 text-gray-400" />
+            {/* Email */}
+            <div>
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium text-gray-700 mb-2"
+              >
+                Email address
+              </label>
+              <div className="relative">
+                <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
                 <input
-                  id="email-address"
-                  name="email"
+                  id="email"
                   type="email"
-                  autoComplete="email"
-                  required
-                  className="input-field"
-                  placeholder="Enter your email address"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
+                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200"
+                  placeholder="Enter your email"
+                  required
                 />
               </div>
+            </div>
 
-              <div className="input-with-icon">
-                <Key className="icon h-5 w-5 text-gray-400" />
+            {/* Password */}
+            <div>
+              <label
+                htmlFor="password"
+                className="block text-sm font-medium text-gray-700 mb-2"
+              >
+                Password
+              </label>
+              <div className="relative">
+                <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
                 <input
                   id="password"
-                  name="password"
-                  type="password"
-                  autoComplete="current-password"
-                  required
-                  className="input-field"
-                  placeholder="Enter your password"
+                  type={showPassword ? "text" : "password"}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
+                  className="w-full pl-10 pr-12 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200"
+                  placeholder="Enter your password"
+                  required
+                  minLength={6}
                 />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                >
+                  {showPassword ? (
+                    <EyeOff className="h-5 w-5" />
+                  ) : (
+                    <Eye className="h-5 w-5" />
+                  )}
+                </button>
               </div>
             </div>
 
-            <div className="flex items-center justify-between">
-              <div className="flex items-center">
-                <input
-                  id="remember-me"
-                  name="remember-me"
-                  type="checkbox"
-                  className="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded"
-                />
-                <label
-                  htmlFor="remember-me"
-                  className="ml-2 block text-sm text-gray-700"
-                >
-                  Remember me
-                </label>
+            {/* Error Message */}
+            {error && (
+              <div className="p-3 bg-red-50 border border-red-200 rounded-xl">
+                <p className="text-sm text-red-600">{error}</p>
               </div>
-              <div className="text-sm">
-                <a
-                  href="#"
-                  className="font-medium text-primary-600 hover:text-primary-500 transition-colors"
-                >
-                  Forgot password?
-                </a>
-              </div>
-            </div>
+            )}
 
-            <button type="submit" className="btn-primary w-full text-lg py-4">
-              Sign In Securely
+            {/* Submit Button */}
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full btn-primary py-3 text-lg font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {loading
+                ? "Please wait..."
+                : isSignUp
+                ? "Create Account"
+                : "Sign In"}
             </button>
           </form>
 
-          <div className="mt-6">
-            <div className="relative">
-              <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-gray-300" />
-              </div>
-              <div className="relative flex justify-center text-sm">
-                <span className="px-2 bg-white text-gray-500">
-                  New to Nalamdhaanaa?
-                </span>
-              </div>
-            </div>
+          {/* Toggle Sign Up/Sign In */}
+          <div className="mt-6 text-center">
+            <p className="text-gray-600">
+              {isSignUp ? "Already have an account?" : "Don't have an account?"}
+              <button
+                type="button"
+                onClick={() => {
+                  setIsSignUp(!isSignUp);
+                  setError("");
+                }}
+                className="ml-2 text-primary-600 hover:text-primary-700 font-semibold"
+              >
+                {isSignUp ? "Sign In" : "Sign Up"}
+              </button>
+            </p>
+          </div>
 
-            <div className="mt-6">
-              <button className="btn-secondary w-full">Create Account</button>
-            </div>
+          {/* Back to Landing */}
+          <div className="mt-4 text-center">
+            <button
+              type="button"
+              onClick={() => navigate("/landing")}
+              className="text-gray-500 hover:text-gray-700 text-sm"
+            >
+              ← Back to home
+            </button>
           </div>
         </div>
-
-        <p className="text-center text-xs text-gray-500">
-          By signing in, you agree to our{" "}
-          <a href="#" className="text-primary-600 hover:text-primary-500">
-            Terms of Service
-          </a>{" "}
-          and{" "}
-          <a href="#" className="text-primary-600 hover:text-primary-500">
-            Privacy Policy
-          </a>
-        </p>
       </div>
     </div>
   );

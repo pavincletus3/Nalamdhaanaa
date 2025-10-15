@@ -1,5 +1,5 @@
 import React from "react";
-import { Menu, LogOut } from "lucide-react";
+import { Menu, LogOut, Home } from "lucide-react";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 
@@ -8,12 +8,16 @@ interface HeaderProps {
 }
 
 const Header: React.FC<HeaderProps> = ({ setSidebarOpen }) => {
-  const { logout } = useAuth();
+  const { signOut } = useAuth();
   const navigate = useNavigate();
 
-  const handleLogout = () => {
-    logout();
-    navigate("/login");
+  const handleLogout = async () => {
+    await signOut();
+    navigate("/landing");
+  };
+
+  const handleGoHome = () => {
+    navigate("/landing");
   };
 
   return (
@@ -30,7 +34,15 @@ const Header: React.FC<HeaderProps> = ({ setSidebarOpen }) => {
               <Menu className="h-6 w-6" aria-hidden="true" />
             </button>
           </div>
-          <div className="flex-1 flex justify-end items-center">
+          <div className="flex-1 flex justify-end items-center space-x-3">
+            <button
+              onClick={handleGoHome}
+              className="btn-secondary flex items-center text-sm"
+              title="Go to Homepage"
+            >
+              <Home className="h-4 w-4 mr-2" />
+              Home
+            </button>
             <button
               onClick={handleLogout}
               className="btn-secondary flex items-center text-sm"

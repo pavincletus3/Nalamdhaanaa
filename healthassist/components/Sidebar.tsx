@@ -8,6 +8,7 @@ import {
   MapPin,
   Bell,
   Settings,
+  Shield,
   X,
 } from "lucide-react";
 
@@ -17,6 +18,7 @@ const navigation = [
   { name: "AI Chat", href: "/chat", icon: MessageSquare },
   { name: "My Medicines", href: "/medicines", icon: Pill },
   { name: "Nearby Health", href: "/nearby", icon: MapPin },
+  { name: "Fact Check", href: "/misinformation", icon: Shield },
   { name: "Alerts", href: "/alerts", icon: Bell },
   { name: "Settings", href: "/settings", icon: Settings },
 ];

@@ -183,7 +183,10 @@ const Prescriptions: React.FC = () => {
 
       <div className="bg-white p-6 rounded-xl shadow-md wide-card mx-auto">
         {step === 0 && (
-          <div>
+          <div
+            className="relative z-10 upload-container"
+            style={{ opacity: 1, visibility: "visible" }}
+          >
             <h2 className="text-xl font-bold text-gray-800 mb-4">
               Upload a New Prescription
             </h2>
@@ -224,7 +227,8 @@ const Prescriptions: React.FC = () => {
             <button
               onClick={handleUpload}
               disabled={!selectedFile}
-              className="mt-6 w-full bg-primary text-white py-3 rounded-lg font-semibold disabled:bg-gray-400 hover:bg-primary-600 transition-colors"
+              className="mt-6 w-full bg-primary-500 text-white py-3 rounded-lg font-semibold disabled:bg-gray-400 hover:bg-primary-600 transition-colors relative z-10"
+              style={{ opacity: 1, visibility: "visible" }}
             >
               Upload and Verify
             </button>
@@ -248,7 +252,7 @@ const Prescriptions: React.FC = () => {
             <Prescription prescription={result} />
             <button
               onClick={resetFlow}
-              className="mt-6 w-full bg-primary text-white py-3 rounded-lg font-semibold hover:bg-primary-600 transition-colors"
+              className="mt-6 w-full bg-primary-500 text-white py-3 rounded-lg font-semibold hover:bg-primary-600 transition-colors"
             >
               Upload Another
             </button>

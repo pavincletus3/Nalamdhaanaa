@@ -333,7 +333,7 @@ export const NearbyHealthcareLocator: React.FC = () => {
           <button
             onClick={handleSearch}
             disabled={loading}
-            className="px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary-600 transition-colors disabled:bg-gray-400 flex items-center gap-2"
+            className="px-6 py-3 bg-primary-500 text-white rounded-lg hover:bg-primary-600 transition-colors disabled:bg-gray-400 flex items-center gap-2"
           >
             <Search size={20} />
             Search
@@ -565,7 +565,7 @@ export const NearbyHealthcareLocator: React.FC = () => {
           </p>
           <button
             onClick={getCurrentLocation}
-            className="bg-primary text-white px-8 py-3 rounded-lg hover:bg-primary-600 transition-colors font-medium"
+            className="bg-primary-500 text-white px-8 py-3 rounded-lg hover:bg-primary-600 transition-colors font-medium"
           >
             Enable Location
           </button>

@@ -472,3 +472,22 @@ html {
 .leaflet-map-pane {
   z-index: 1 !important;
 }
+
+/* Fix for button visibility issues */
+button {
+  position: relative;
+  z-index: 1;
+}
+
+.btn-primary {
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* Ensure upload containers maintain visibility */
+.upload-container {
+  position: relative;
+  z-index: 10;
+  opacity: 1;
+  visibility: visible;
+}

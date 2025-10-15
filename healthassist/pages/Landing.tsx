@@ -13,7 +13,7 @@ import {
 
 const Landing: React.FC = () => {
   const navigate = useNavigate();
-  const { user, logout } = useAuth();
+  const { user, signOut } = useAuth();
 
   const handleSignIn = () => {
     navigate("/login");
@@ -25,28 +25,28 @@ const Landing: React.FC = () => {
 
   const teamMembers = [
     {
-      name: "Dr. Sarah Chen",
-      role: "Lead Developer & Medical Advisor",
+      name: "Vivek Subramanian G",
+      role: "Team Leader & ML Engineer",
       image: "/api/placeholder/150/150",
       linkedin: "#",
       github: "#",
     },
     {
-      name: "Alex Rodriguez",
+      name: "Pavin Cletus A",
       role: "Full Stack Developer",
       image: "/api/placeholder/150/150",
       linkedin: "#",
       github: "#",
     },
     {
-      name: "Maya Patel",
-      role: "UI/UX Designer",
+      name: "Chinna Durai",
+      role: "Full Stack Developer",
       image: "/api/placeholder/150/150",
       linkedin: "#",
       github: "#",
     },
     {
-      name: "James Wilson",
+      name: "Sahana S",
       role: "Backend Engineer",
       image: "/api/placeholder/150/150",
       linkedin: "#",
@@ -75,7 +75,7 @@ const Landing: React.FC = () => {
                   <button onClick={handleDashboard} className="btn-secondary">
                     Dashboard
                   </button>
-                  <button onClick={logout} className="btn-secondary">
+                  <button onClick={signOut} className="btn-secondary">
                     Sign Out
                   </button>
                 </>
@@ -323,9 +323,6 @@ const Landing: React.FC = () => {
               </span>
             </div>
             <div className="text-center md:text-right">
-              <p className="text-gray-300 text-lg font-medium">
-                © 2024 Nalamdhaanaa. Built with ❤️ for better health management.
-              </p>
               <p className="text-gray-400 text-sm mt-2">
                 Empowering healthier lives through innovative technology.
               </p>

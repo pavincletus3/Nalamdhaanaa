@@ -85,3 +85,25 @@ export interface MedicationAlertPayload {
 export interface MedicationAlert extends MedicationAlertPayload {
   id: string;
 }
+
+// Misinformation Detection Types
+export enum Verdict {
+  TRUE = "TRUE",
+  FALSE = "FALSE",
+  MISLEADING = "MISLEADING",
+  UNVERIFIED = "UNVERIFIED",
+}
+
+export interface FactCheckResponse {
+  user_claim: string;
+  matched_claim: string | null;
+  similarity_score: number;
+  verdict: Verdict;
+  verdict_icon: string;
+  source: string;
+  source_url: string | null;
+  category: string;
+  evidence_score: number;
+  recommendation: string;
+  date_fact_checked: string | null;
+}

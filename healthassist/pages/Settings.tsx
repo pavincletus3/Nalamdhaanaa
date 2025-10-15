@@ -73,7 +73,7 @@ const Settings: React.FC = () => {
           )}
           <button
             onClick={handleSave}
-            className="bg-primary text-white py-2 px-6 rounded-lg font-semibold hover:bg-primary-600 transition-colors"
+            className="bg-primary-500 text-white py-2 px-6 rounded-lg font-semibold hover:bg-primary-600 transition-colors"
           >
             Save Changes
           </button>

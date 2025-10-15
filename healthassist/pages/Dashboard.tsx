@@ -2,6 +2,7 @@ import React from "react";
 import { useData } from "../context/DataContext";
 import { useAuth } from "../context/AuthContext";
 import Card from "../components/Card";
+import { DatabaseStatus } from "../components/DatabaseStatus";
 import { Link } from "react-router-dom";
 import {
   UploadCloud,
@@ -39,11 +40,14 @@ const Dashboard: React.FC = () => {
       <div className="text-center lg:text-left">
         <h1 className="text-4xl font-bold text-gray-900 mb-2">
           {getGreeting()},{" "}
-          <span className="text-gradient">{user?.email.split("@")[0]}</span>!
+          <span className="text-gradient">{user?.email?.split("@")[0]}</span>!
         </h1>
         <p className="text-lg text-gray-600">
           Here's your personalized health overview for today.
         </p>
+        <div className="mt-4">
+          <DatabaseStatus />
+        </div>
       </div>
 
       {/* Summary Cards */}
